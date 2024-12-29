@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate QR Code</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* .container__gen, .container__qr {
+            border-radius: 8px;
+        } */
+
+        .container__gen {
+            background-color: #e0f7fa;
+            padding: 20px 50px;
+        }
+
+        .container__qr {
+            padding: 20px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #fbe9e7;
+        }
+
+        h1, h2 {
+            margin: 0 0 20px 0;
+            color: #333;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #00796b;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #004d40;
+        }
+
+        img {
+            max-width: 250px;
+            max-height: 250px;
+            border: 5px solid #eee;
+            border-radius: 8px;
+        }
+
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- QR Code Generator Section -->
+        <div class="container__gen">
+            <h1>Generate a QR Code</h1>
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <label for="link">Enter Link:</label>
+                <input type="text" name="link" id="link" required>
+                <button type="submit">Generate QR Code</button>
+            </form>
+        </div>
+
+        <!-- QR Code Display Section -->
+        <div class="container__qr">
+            <h2>Your QR Code:</h2>
+            <img src="{{ qr }}" alt="QR Code" />
+        </div>
+    </div>
+</body>
+</html>
