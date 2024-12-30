@@ -1,3 +1,4 @@
+from decouple import config
 
 from pathlib import Path
 
@@ -9,10 +10,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#girq!6vlvyy0w(yvzx5&1d%*f)+#9cn_9+p1!s3gm)6(68bx^'
+# SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -28,15 +30,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'qr_app'
 ]
-
-# settings.py for email.verification
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Use SMTP for sending emails
-EMAIL_HOST = 'smtp.gmail.com'                                 # SMTP server for Gmail (use your email provider's server)
-EMAIL_PORT = 587                                              # Port for TLS (secure connection)
-EMAIL_USE_TLS = True                                          # Enable TLS
-EMAIL_HOST_USER = 'imostephenakang@gmail.com'              # Your email address
-EMAIL_HOST_PASSWORD = 'alesabaalllvhqtf'                  # Your email password or app password
-DEFAULT_FROM_EMAIL = 'no-reply@gmail.com'                # Default sender email
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
